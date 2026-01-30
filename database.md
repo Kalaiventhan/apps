@@ -78,3 +78,17 @@ Can we execute using database user like devuser?
         - It applies any new migrations in order.
         - Updates the history table after successful execution.
     
+# My application pod is running on server A. I want to execute DB scripts on Server B.
+  - Your pod does NOT execute scripts “on Server B”. It connects to the database listener running on Server B over the network and executes SQL remotely.
+  - In databases, scripts always run where the DB is, not where the client runs.
+  - [POD on Server A]
+        |
+        |  (TCP 1521 / JDBC)
+        v
+   [Oracle DB on Server B]
+ - Methods
+     - Flyway inside the pod - BEST PRACTICE
+         - Separate POD
+         - initcontainer inside application POD
+     - sqlplus from pod (traditional)
+     - Kubernetes Job / InitContainer (production-grade)
