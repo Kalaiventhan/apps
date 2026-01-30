@@ -26,6 +26,7 @@
       EXPOSE 80
      CMD ["/start.sh"]
    - start.sh
+     
     Print log for debugging purposes
     echo "Replacing environment variables in /usr/share/nginx/html/ ..."
     cd /usr/share/nginx/html/
