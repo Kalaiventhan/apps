@@ -3,15 +3,15 @@
 - dockerfile
   - pnpm build # Build command
 - package.json
-  "build": "cross-env PORT=4006 NODE_ENV=production SERVER=prod webpack --config config/webpack/webpack.prod.js --color --mode production --progress",
-   dotenv-webpack": "^8.0.1" # Using this plugin to explictly load .env.build file
+  - "build": "cross-env PORT=4006 NODE_ENV=production SERVER=prod webpack --config config/webpack/webpack.prod.js --color --mode production --progress",
+   - dotenv-webpack": "^8.0.1" # Using this plugin to explictly load .env.build file
 - config/webpack/webpack.prod.js
-  const plugins = [
-    new Dotenv({
-      path: '.env.build',
-      systemvars: true,
-    })
- ];
+        const plugins = [
+          new Dotenv({
+            path: '.env.build',
+            systemvars: true,
+          })
+       ];
 
 ## How to update the value of envirment variable with respect to environment? In case of use the same image on all environments
    using sed command
