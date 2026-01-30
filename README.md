@@ -17,10 +17,10 @@
 # How to update the value of envirment variable with respect to environment? In case of use the same image on all environments
    - using sed command
    - .env.build
-         REMOTE_ENTRY_NAME="remoteentry.js"  --> common to all envs and no need of sed replacement
-         API_URL="API_URL_VALUE" --> specific value for each environment
+         - REMOTE_ENTRY_NAME="remoteentry.js"  --> common to all envs and no need of sed replacement
+         - API_URL="API_URL_VALUE" --> specific value for each environment
    - Dockerfile 
-      # Copy start script
+      Copy start script
       COPY start.sh /start.sh
       RUN chmod +x /start.sh
       EXPOSE 80
@@ -37,11 +37,12 @@
     Start nginx in the foreground
     nginx -g 'daemon off;'
   - configmap
-    we get the API_URL_VALUE from POD system environment variable which we set using configmap.
+      - we get the API_URL_VALUE from POD system environment variable which we set using configmap.
 
 
 
 # How to validate
   - add console.log in the code like console.log(process.env.ENV_VAR_NAME);
   - open pod and goto /usr/share/nginx/html and lookk for 572 chunk JS file. Copy to your local machine and check the variable/values.
+      - kubectl cp POD_NAME:/usr/share/nginx/html/572.XXXXXXXXXXXXXXXXXXXX.chunk.js  chunk.js -n NAMESPACE # XXX - Replace with actual filename.
  
