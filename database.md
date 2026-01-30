@@ -71,6 +71,7 @@ Can we execute using database user like devuser?
         - Supports multiple database engines (Oracle, Postgres, MySQL, SQL Server, etc.)
         - Flyway can undo failed migrations (if designed) or mark scripts as applied/ignored. Helps recover from partial deployments.
         - Flyway fits well into automated pipelines, e.g., you can run migrations as part of Jenkins, GitHub Actions, or Kubernetes deployments.
+        - It provide Reports
     - How it works?
         - You write migration scripts in SQL or Java.
         - Name them with a version pattern, e.g., V1__init.sql, V2__add_table.sql.
@@ -92,3 +93,26 @@ Can we execute using database user like devuser?
          - initcontainer inside application POD
      - sqlplus from pod (traditional)
      - Kubernetes Job / InitContainer (production-grade)
+  
+   Preserve vs Unpreserve data
+   Uncouple from application POD
+
+   v1.0.0 (app version) -- it has v1 file
+   v1.0.1 (app version) -- it has v1 +v2 files 
+
+   flyway clean and repair
+
+   If fails with DB scripts it would go to previous version. Can we fail the initcontainer? I dont want to run backend container with failed Db scripts
+   Yes — fail the initContainer
+  ✅ Backend container will not start
+  ✅ This is the correct Kubernetes + Flyway pattern
+  ❌ Flyway does NOT rollback automatically
+  ❌ Don’t allow app to start on failed DB schema
+
+  isolated -- not integrated with cicd.
+
+  dweaver vs SQL developer
+
+  
+  
+   
