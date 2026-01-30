@@ -10,6 +10,9 @@
         sqlplus -silent "/ as sysdba" <<EOF
            @/home/oracle/SqlFileName.sql
         EOF
+
+  Can we execute using database user like devuser?
+  No, we have to provide the password. If we execute manually, it is fine. But, ** it is a risk ** if we store password and execute as part of CI/CD.
   
 # Flyway - Database migration/version control tool
   - Think of it like Git for your database schema — you track changes, apply them in order, and make sure every environment (dev, test, prod) is consistent
