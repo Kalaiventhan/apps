@@ -1,11 +1,12 @@
-##React
+## React
 # How load the environment variables from .env.build?
 - dockerfile
   - pnpm build # Build command
 - package.json
   - "build": "cross-env PORT=4006 NODE_ENV=production SERVER=prod webpack --config config/webpack/webpack.prod.js --color --mode production --progress",
-   - dotenv-webpack": "^8.0.1" # Using this plugin to explictly load .env.build file
+  - dotenv-webpack": "^8.0.1" # Using this plugin to explictly load .env.build file
 - config/webpack/webpack.prod.js
+  
         const Dotenv = require('dotenv-webpack');
         const plugins = [
           new Dotenv({
@@ -17,10 +18,11 @@
 # How to update the value of envirment variable with respect to environment? In case of use the same image on all environments
    - using sed command
    - .env.build
-         - REMOTE_ENTRY_NAME="remoteentry.js"  --> common to all envs and no need of sed replacement
-         - API_URL="API_URL_VALUE" --> specific value for each environment
-   - Dockerfile 
-      Copy start script
+     - REMOTE_ENTRY_NAME="remoteentry.js"  --> common to all envs and no need of sed replacement
+     - API_URL="API_URL_VALUE" --> specific value for each environment
+   - Dockerfile
+      
+      #Copy start script
       COPY start.sh /start.sh
       RUN chmod +x /start.sh
       EXPOSE 80
