@@ -11,3 +11,21 @@
            @/home/oracle/SqlFileName.sql
         EOF
   
+# Flyway - Database migration/version control tool
+  - Think of it like Git for your database schema — you track changes, apply them in order, and make sure every environment (dev, test, prod) is consistent
+      You have scripts:
+        V1__init.sql
+        V2__add_user_table.sql
+        V3__add_email_column.sql
+
+        First run (new DB)
+        Flyway runs:
+        V1 → V2 → V3
+
+        Later you add:
+        V4__add_index.sql
+
+        Next deployment
+        Flyway runs:
+        ONLY V4
+    
