@@ -7,25 +7,24 @@
     - A logical container for database objects
     - Tables, views, indexes, procedures, sequences, etc.  
     - You never explicitly create a schema in Oracle.
-      ➡️ The schema is automatically created when the user is created
-      ➡️ Schema name = user name
+       - The schema is automatically created when the user is created
+       - Schema name = user name
       
-      So:
-      User   : DEVUSER
-      Schema : DEVUSER
-      Key relationship (very important)
-      Concept	Oracle meaning
-      USER	Authentication (login)
-      SCHEMA	Object ownership
-      Relationship	1 user = 1 schema (same name)
+          So:
+          User   : DEVUSER
+          Schema : DEVUSER
+          Key relationship (very important)
+          Concept	Oracle meaning
+          USER	Authentication (login)
+          SCHEMA	Object ownership
+          Relationship	1 user = 1 schema (same name)
 
   - Multiple users accessing one schema (common in real life)
 
-    Enterprise pattern:
-    User	Purpose
-    FLYWAY_USER	Runs migrations
-    APP_USER	Application runtime
-    REPORT_USER	Read-only reports
+    Enterprise pattern: (User	Purpose)
+      - FLYWAY_USER	Runs migrations
+      - APP_USER	Application runtime
+      - REPORT_USER	Read-only reports
 
     How it works?
       - FLYWAY_USER has privileges on APP_SCHEMA
