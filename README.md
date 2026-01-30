@@ -1,11 +1,11 @@
 # React
 ## How load the environment variables from .env.build?
-dockerfile
-  pnpm build # Build command
-package.json
+- dockerfile
+  - pnpm build # Build command
+- package.json
   "build": "cross-env PORT=4006 NODE_ENV=production SERVER=prod webpack --config config/webpack/webpack.prod.js --color --mode production --progress",
    dotenv-webpack": "^8.0.1" # Using this plugin to explictly load .env.build file
-config/webpack/webpack.prod.js
+- config/webpack/webpack.prod.js
   const plugins = [
     new Dotenv({
       path: '.env.build',
