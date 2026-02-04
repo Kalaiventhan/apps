@@ -113,6 +113,23 @@ Can we execute using database user like devuser?
 
   dweaver vs SQL developer
 
+  # DB scripts execution using CI/CD
+    **CONN**
+    job1 - v1 change
+    job2 - v2 (update/new) - Delta
+    job3 - v3 (update/new) - Delta
+    For already deployed machine, just deploy the delta job.
+    For new machine - Need golden job- v1+v2+v3  (Include all jobs - job1/2/3)
+
+    oTHER WAY:
+    job1 - v1 change
+    job2 - v2 (update/new + v1) - Delta + Base changes
+    job3 - v3 (update/new + v1 + V2) - Delta + Base changes
+    For already deployed or new machines --> Always the latest job. 
+    
+
+  
+
   
   
    
