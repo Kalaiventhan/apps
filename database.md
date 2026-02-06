@@ -35,6 +35,7 @@
   - Direct
     
       su - oracle -c "sqlplus / as sysdba @/home/oracle/SqlFileName.sql"
+    
   - From Shell Script
     
       su - oracle -c '/home/oracle/ShellScript.sh'
@@ -46,7 +47,38 @@
 Can we execute using database user like devuser?
        No, we have to provide the password. If we execute manually, it is fine. But, **it is a risk** if we store password and execute as part of CI/CD.
 
-  
+# Sample shell script
+  ```
+  #########################################################################################
+set -e
+VERSION=1.0
+BASE_DIR="/home/oracle/APPNAME"
+LOGFILE="$BASE_DIR/log/$VERSION/sql-execution-$(date +%Y-%m-%d_%H-%M-%S).log" 
+mkdir -p "$BASE_DIR/log/$VERSION" "$BASE_DIR/sql" 
+echo "Starting SQL execution for version $VERSION" | tee -a "$LOGFILE" 
+unzip -j -o "$BASE_DIR/sql/APPNAME-sql-$VERSION.zip" -d "$BASE_DIR/sql/$VERSION" >> "$LOGFILE" 2>&1 
+sqlplus -silent "/ as sysdba" <<EOF >> $LOGFILE 2>&1
+    @/home/oracle/APPNAME/sql/$VERSION/FILENAME.sql
+EXIT
+EOF 
+if [ $? -ne 0 ]; then
+    echo "SQL execution failed." | tee -a "$LOGFILE"
+    exit 1
+else
+    echo "SQL execution completed successfully." | tee -a "$LOGFILE"
+fi
+```
+Above Shell script make continue to execute all files even if there is any ERROR. It would not  make shecll script to fail.
+To fail Shell script and make stop to execute at first error and exit by,
+```
+sqlplus -silent "/ as sysdba" <<EOF >> $LOGFILE 2>&1
+     WHENEVER SQLERROR EXIT SQL.SQLCODE
+     WHENEVER OSERROR EXIT FAILURE
+    @/home/oracle/APPNAME/sql/$VERSION/FILENAME.sql
+EXIT
+EOF
+```
+
 # Flyway - Database migration/version control tool
   - Think of it like Git for your database schema — you track changes, apply them in order, and make sure every environment (dev, test, prod) is consistent
       You have scripts:
